@@ -5,16 +5,32 @@ homepage:
   controller: App\Controller\StreambookController::index
 
 profil:
-  path: /profil/{id}
-  controller: App\Controller\StreambookController::profil
-  requirements:
-    id: '\d+'
+  path: /profil
+  controller: App\Controller\ProfilController::index
+
+profil_show:
+  path: /show
+  controller: App\Controller\ProfilController::show
+
+profil_edit:
+  path: /edit
+  controller: App\Controller\ProfilController::edit
 
 preference:
-  path: /preference/{id}
-  controller: App\Controller\StreambookController::preference
-  requirements:
-    id: '\d+'
+  path: /preference
+  controller: App\Controller\PreferenceController::index
+
+preference_add:
+  path: /add
+  controller: App\Controller\PreferenceController::add
+
+preference_show:
+  path: /show
+  controller: App\Controller\StreambookController::show
+
+preference_remove:
+  path: /remove
+  controller: App\Controller\PreferenceController::remove
 
 book_add:
   path: /add
