@@ -1,3 +1,55 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+#config/routes.yaml
+
+homepage:
+  path: /
+  controller: App\Controller\StreambookController::index
+
+profil:
+  path: /profil/{id}
+  controller: App\Controller\StreambookController::profil
+  requirements:
+    id: '\d+'
+
+preference:
+  path: /preference/{id}
+  controller: App\Controller\StreambookController::preference
+  requirements:
+    id: '\d+'
+
+book_add:
+  path: /add
+  controller: App\Controller\StreambookController::add
+
+book_show:
+  path: /show/{url}
+  controller: App\Controller\StreambookController::show
+
+book_edit:
+  path: /edit/{id}
+  controller: App\Controller\StreambookController::edit
+  requirements:
+    id: '\d+'
+
+book_summarize:
+  path: /summarize/{id}
+  controller: App\Controller\StreambookController::summarize
+  requirements:
+    id: '\d+'
+
+book_remove:
+  path: /remove/{id}
+  controller: App\Controller\StreambookController::remove
+  requirements:
+    id: '\d+'
+
+book_comment:
+  path: /comment/{id}
+  controller: App\Controller\StreambookController::comment
+  requirements:
+    id: '\d+'
+
+page_note:
+  path: /note/{id}
+  controller: App\Controller\StreambookController::note
+  requirements:
+    id: '\d+'
