@@ -18,6 +18,13 @@ class StreambookController extends AbstractController
         ]);
     }
 
+    public function add()
+    {
+        return $this->render('streambook/index.html.twig', [
+            'controller_name' => 'StreambookController',
+        ]);
+    }
+
     public function show($url)
     {
         return $this->render('streambook/index.html.twig', [

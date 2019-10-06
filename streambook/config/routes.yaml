@@ -9,11 +9,11 @@ profil:
   controller: App\Controller\ProfilController::index
 
 profil_show:
-  path: /show
+  path: /profil/show
   controller: App\Controller\ProfilController::show
 
 profil_edit:
-  path: /edit
+  path: /profil/edit
   controller: App\Controller\ProfilController::edit
 
 preference:
@@ -21,15 +21,15 @@ preference:
   controller: App\Controller\PreferenceController::index
 
 preference_add:
-  path: /add
+  path: /preference/add
   controller: App\Controller\PreferenceController::add
 
 preference_show:
-  path: /show
+  path: /preference/show
   controller: App\Controller\StreambookController::show
 
 preference_remove:
-  path: /remove
+  path: /preference/remove
   controller: App\Controller\PreferenceController::remove
 
 book_add:
