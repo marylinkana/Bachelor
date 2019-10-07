@@ -8,6 +8,6 @@ function getUsers(){
 
 function searchUsers($get, $value){
     require "bdd_connexion.php";
-    $result = $bdd->query("SELECT * FROM user where nom like '$value' or prenom like '$value' or email like '$value'");
+    $result = $bdd->query("SELECT * FROM user where nom like '%$value%' or prenom like '%$value%' or email like '%$value%'");
     return $result->fetchAll();
 }
