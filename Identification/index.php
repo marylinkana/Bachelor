@@ -18,4 +18,4 @@ require "controllers/".$page.".php";
 $content = ob_get_contents();//recupere ce qui n'a pas ete affiché
 ob_end_clean();//reprend l'affichage
 require "layout.php";
-?>
+

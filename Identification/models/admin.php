@@ -24,10 +24,3 @@ if (isset($_POST['supprimer']) && !empty($_POST['supprimer'])){
     $bdd->query("DELETE FROM user where id_user = '$id' ");
     header("location:users?delete");
 }
-
-if (isset($_POST['search']) && !empty($_POST['searchValue'])){
-    $value = $_POST['searchValue'];
-    $result = $bdd->query("SELECT * FROM user where nom like '$value' or prenom like '$value' or email like '$value'");
-    $find = $result->fetchAll();
-    header("location:users?$find");
-}

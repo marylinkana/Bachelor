@@ -30,8 +30,8 @@ if(isset($_GET['delete'])){
 </header>
     <body>
       <?php
-      if(isset($_GET['Array'])){
-          if (!empty($_GET['Array'])){
+      if(isset($search)){
+          if (!empty($search)){
           ?>
       <h4 align="center">Résultat de la recherche</h4>
         <form action="admin" method="post">
@@ -47,7 +47,7 @@ if(isset($_GET['delete'])){
                 </tr>
                 </thead>
         <?php
-            foreach ($_GET['Array'] as $n => $user){
+            foreach ($search as $n => $user){
                 ?>
                 <tbody>
                 <tr>

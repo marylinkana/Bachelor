@@ -42,7 +42,7 @@ function register($reg) {
        $req_insert_user->bindValue(':email', $email, PDO::PARAM_STR);
        $test = $req_insert_user->execute();
        //var_dump($test);
-       header("location:../views/form_users_list.php");
+       header("location:users");
        return $test;
      }
      else{
