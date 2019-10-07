@@ -4,6 +4,25 @@ homepage:
   path: /
   controller: App\Controller\StreambookController::index
 
+login:
+  path: /login
+  controller: App\Controller\StreambookController::login
+
+logout:
+  path: /logout
+  controller: App\Controller\StreambookController::logout
+
+cathegories:
+  path: /cathegories
+  controller: App\Controller\StreambookController::cathegories
+
+
+cathegorie:
+  path: /cathegorie/{id}
+  controller: App\Controller\StreambookController::cathegorie
+  requirements:
+    id: '\d+'
+
 profil:
   path: /profil
   controller: App\Controller\ProfilController::index

@@ -21,6 +21,11 @@ class Categorie
      */
     private $nomCategorie;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $descriptionCategorie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,18 @@ class Categorie
     public function setNomCategorie(string $nomCategorie): self
     {
         $this->nomCategorie = $nomCategorie;
+
+        return $this;
+    }
+
+    public function getDescriptionCategorie(): ?string
+    {
+        return $this->descriptionCategorie;
+    }
+
+    public function setDescriptionCategorie(string $descriptionCategorie): self
+    {
+        $this->descriptionCategorie = $descriptionCategorie;
 
         return $this;
     }
