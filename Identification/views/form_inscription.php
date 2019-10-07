@@ -1,8 +1,3 @@
-<?php
-require "inscription.php";
-require "layout.php";
-?>
-
 <html>
 <header> <title></title> </header>
 <body>
@@ -13,7 +8,7 @@ require "layout.php";
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <form class="form-inline my-2 my-lg-0" action="inscription.php" method="post">
+        <form class="form-inline my-2 my-lg-0" action="inscription" method="post">
             <input class="form-control mr-sm-2" type="text" name="nom" required placeholder="nom">
             <input class="form-control mr-sm-2" type="text" name="prenom" placeholder="prenom" required>
             <input class="form-control mr-sm-2" type="email" name="email" placeholder="email" required>

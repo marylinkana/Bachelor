@@ -1,6 +1,7 @@
 <?php
+ require_once "IAnimal.php";
  require_once "Animal.php";
-    require_once "Lion.php";
+ require_once "Lion.php";
 
 class Main
 {
@@ -9,7 +10,7 @@ class Main
 
 $animal = new Animal("animalinio", "7 mois", "100 kg");
 echo $animal->getName()."\n";
-$animal->eat();
+//$animal->eat();
 
 $lion = new Lion("lioninio", "7 mois", "100 kg");
 echo $lion->getName()."\n";
