@@ -19,8 +19,6 @@ function register($reg) {
     $email =  htmlspecialchars($reg['email']);
     $mdp =  sha1(htmlspecialchars($reg['mdp']));
 
-
-
     if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#i", $email)){
         echo "<p class='text-danger'>invalid email</p>";
         return "<p class='text-danger'>invalid email</p>";
