@@ -12,14 +12,14 @@ logout:
   path: /logout
   controller: App\Controller\StreambookController::logout
 
-cathegories:
-  path: /cathegories
-  controller: App\Controller\StreambookController::cathegories
+categories:
+  path: /categories
+  controller: App\Controller\StreambookController::categories
 
 
-cathegorie:
+categorie:
   path: /cathegorie/{id}
-  controller: App\Controller\StreambookController::cathegorie
+  controller: App\Controller\StreambookController::categorie
   requirements:
     id: '\d+'
 
@@ -54,6 +54,10 @@ preference_remove:
 book_add:
   path: /add
   controller: App\Controller\StreambookController::add
+
+book_formAddBook:
+  path: /formAddBook
+  controller: App\Controller\StreambookController::formAddBook
 
 book_show:
   path: /show/{url}
