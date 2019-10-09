@@ -20,6 +20,13 @@ class StreambookController extends AbstractController
         ]);
     }
 
+    public function formAddBook()
+    {
+        return $this->render('streambook/add.html.twig', [
+            'controller_name' => 'StreambookController',
+        ]);
+    }
+
     public function add() : Response
     {
         // you can fetch the EntityManager via $this->getDoctrine()
@@ -27,8 +34,8 @@ class StreambookController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
 
         $book = new Book();
-        $book->setTitle('BIBLE');
-        $book->setDescription('Livre chretien');
+        $book->setTitle('MATILDA');
+        $book->setDescription('Roman');
         $book->setLanguage('Français');
 
         // tell Doctrine you want to (eventually) save the Product (no queries yet)
@@ -54,7 +61,7 @@ class StreambookController extends AbstractController
         ]);
     }
 
-    public function cathegories()
+    public function categories()
     {
         return $this->render('streambook/index.html.twig', [
             'controller_name' => 'StreambookController',
