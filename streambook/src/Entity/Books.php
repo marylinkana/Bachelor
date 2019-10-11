@@ -36,6 +36,16 @@ class Books
      */
     private $url;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $autor;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +95,30 @@ class Books
     public function setUrl(string $url): self
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getAutor(): ?string
+    {
+        return $this->autor;
+    }
+
+    public function setAutor(string $autor): self
+    {
+        $this->autor = $autor;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
