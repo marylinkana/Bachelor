@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Books;
+use App\Entity\Categories;
 use App\Form\CreateBookFormType;
+use App\Form\CreateCategoryFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 class AdminController extends AbstractController
@@ -60,6 +61,34 @@ class AdminController extends AbstractController
 
         return $this->render('admin/createBook.html.twig', [
             'bookForm' => $book_form->createView(),
+            'user' => $user,
+            'user_email' => $user_email,
+            'user_id' => $user_id,
+        ]);
+    }
+
+    /**
+     * @Route("/newcategory", name="app_newcategory")
+     */
+    public function createCategoryForm(Request $request): Response
+    {
+        $user = $this->getUser();
+        $user_email = $this->getUser()->getEmail();
+        $user_id = $this->getUser()->getId();
+
+        $category = new Categories();
+        $category_form = $this->createForm(CreateCategoryFormType::class, $category);
+        $category_form->handleRequest($request);
+
+        if ($category_form->isSubmitted()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($category);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_admin');
+        }
+
+        return $this->render('admin/createCategory.html.twig', [
+            'categoryForm' => $category_form->createView(),
             'user' => $user,
             'user_email' => $user_email,
             'user_id' => $user_id,

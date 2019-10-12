@@ -25,7 +25,7 @@ class BooksRepository extends ServiceEntityRepository
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
+            ->andWhere('b.category = :val')
             ->setParameter('val', $value)
             ->orderBy('b.id', 'ASC')
             ->setMaxResults(10)
@@ -37,7 +37,7 @@ class BooksRepository extends ServiceEntityRepository
     public function findOneBySomeField($value): ?Books
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
+            ->andWhere('b.category = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
