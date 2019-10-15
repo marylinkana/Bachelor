@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Books;
 use App\Entity\Categories;
+use App\Entity\Page;
 use App\Entity\User;
 use App\Form\AddBookToCategoryFormType;
 use App\Form\AddUserToAdminFormType;
 use App\Form\CreateBookFormType;
 use App\Form\CreateCategoryFormType;
+use App\Form\CreatePageForBookFormTypePhpType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -242,6 +244,47 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/AddBookToCategory.html.twig', [
+            'form' => $form->createView(),
+            'allBooks' => $allBooks,
+            'user' => $thisUser,
+            'allCategories' => $allCategories,
+        ]);
+    }
+
+    /**
+     * @Route("/newPageForBook", name="app_newPageForBook")
+     */
+    public function newPageForBook(Request $request): Response
+    {
+        $page = new Page();
+        $form = $this->createForm(CreatePageForBookFormTypePhpType::class, $page);
+        $form->handleRequest($request);
+
+        $allBooks = $this->getDoctrine()
+            ->getRepository(Books::class)
+            ->findAll();
+
+        $allCategories = $this->getDoctrine()
+            ->getRepository(Categories::class)
+            ->findAll();
+
+        $thisUser = $this->getUser();
+
+        if (isset($_POST['submit_add_page_for_book'])) {
+            $book= $this->getDoctrine()
+                ->getRepository(Books::class)
+                ->find($_POST['id_book']);
+
+            $page->setIdBook($book);
+            $page->setContent($_POST['content']);
+            $page->setTitle($_POST['title']);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($page);
+            $entityManager->flush();
+        }
+
+        return $this->render('admin/createPageForBook.html.twig', [
             'form' => $form->createView(),
             'allBooks' => $allBooks,
             'user' => $thisUser,

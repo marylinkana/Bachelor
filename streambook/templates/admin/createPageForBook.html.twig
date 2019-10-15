@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Gréer une nouvelle page pour votre livre</h1>
+
+    <form action="{{ path('app_newPageForBook') }}" method="post">
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Sélectionner un livre :</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="id_book">
+                {% if allBooks is defined %}
+                    {% for oneBook in allBooks %}
+                        <option  name="id_book" value="{{ oneBook.id }}"> Titre : {{ oneBook.title }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+            <label for="exampleFormControlSelect2">Titre de la page :</label>
+            <input type="text" class="form-control" name="title">
+            <label for="exampleFormControlSelect2">Rédiger une nouvelle page pour ce livre :</label>
+            <head>
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+            </head>
+            <textarea name="content" id="summernote"></textarea>
+            <script>
+                $('#summernote').summernote({
+                    placeholder: 'Rédiger une nouvelle page pour ce livre',
+                    tabsize: 2,
+                    height: 200,
+                });
+            </script>
+        </div>
+        <input class="btn btn-success" type="submit" class="btn btn-success" name="submit_add_page_for_book" value="ajouter">
+    </form>
+
+{% endblock %}
