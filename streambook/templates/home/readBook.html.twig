@@ -42,7 +42,7 @@
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                             <div class="dropdown-header">Changer de page</div>
                                             {% for page in pages %}
-                                                <a class="dropdown-item" href="#">{{ loop.index }}</a>
+                                                <a class="dropdown-item" href="#">page : {{ loop.index }}</a>
                                             {% endfor %}
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">Les oeuvres du même auteur</a>
@@ -52,8 +52,10 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     {% for page in pages %}
+                                        <h6>Page : {{ loop.index }}</h6>
                                         <h4>{{ page.title }}</h4>
-                                        <p>{{ page.content }}</p>
+                                        {{ page.content | raw }}
+                                        <div style="margin-top: 50px"></div>
                                     {% endfor %}
                                 </div>
                                 <div class="card-body">
