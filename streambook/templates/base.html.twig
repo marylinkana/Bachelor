@@ -8,8 +8,8 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-    <nav class=" navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">STREAMBOOK</a>
+    <nav class=" navbar navbar-expand-lg navbar-white bg-white">
+        <a class="navbar-brand text-success" href="#">STREAMBOOK</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,16 +17,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_home') }}">Accueil <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-success" href="{{ path('app_home') }}">Accueil <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-success" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Catégories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% if categories is defined %}
                             {% for category in categories %}
-                            <a class="dropdown-item" href="/{{ category.type }}">{{ category.type }}</a>
+                            <a class="dropdown-item" href="{{ path('app_category', {'cat':category.id}) }}">{{ category.type }}</a>
                             {% endfor %}
                         {% endif %}
                         <div class="dropdown-divider"></div>
@@ -34,14 +34,14 @@
                     </div>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('app_search') }}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchValue">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="search">
                     <i class="fa fa-search" style="font-size:20px;color:green;"></i>
                 </button>
             </form>
             <ul>
-                {% if user_email is defined and user_email == 'admin@gmail.com' %}
+                {% if user.level is defined and user.level == 1 %}
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
                     <a href="{{ path('app_admin') }}"><i class="fa fa-dashboard" style="font-size:20px;color:green;"></i></a>
                 </button>
@@ -71,7 +71,7 @@
     <footer class="sticky-footer bg-white">
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
-                <span>Copyright © Baudoin | StreamBook 2019</span>
+                <span>Copyright © Baudoin KANA | StreamBook 2019 | Tous droits réservés.</span>
             </div>
         </div>
     </footer>
@@ -80,7 +80,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
     {% block javascripts %}{% endblock %}
     </body>
 </html>

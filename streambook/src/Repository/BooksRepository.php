@@ -22,10 +22,10 @@ class BooksRepository extends ServiceEntityRepository
      /**
       * @return Books[] Returns an array of Books objects
       */
-    public function findByExampleField($value)
+    public function findByTitleField($value)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.category = :val')
+            ->Where('b.title = :val')
             ->setParameter('val', $value)
             ->orderBy('b.id', 'ASC')
             ->setMaxResults(10)
@@ -34,10 +34,39 @@ class BooksRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findOneBySomeField($value): ?Books
+    public function findByIdJoinedToCategory($cat)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.category = :val')
+            ->select('b')
+            ->innerJoin('b.category', 'bc')
+            ->Where('bc.id = :id')
+            ->setParameter('id', $cat)
+            ->orderBy('b.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    public function findLikeExampleField($value)
+    {
+        return $this->createQueryBuilder('b')
+            ->orWhere('b.title like :val')
+            ->orWhere('b.author like :val')
+            ->orWhere('b.description like :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->orderBy('b.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findOneByAuthorField($value): ?Books
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.author = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

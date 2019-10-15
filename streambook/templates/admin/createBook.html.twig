@@ -13,11 +13,11 @@
         {{ form_row(bookForm.title, {
             attr: { placeholder: 'TITRE', class: 'form-control', }
         }) }}
+        {{ form_row(bookForm.author, {
+            attr: { placeholder: 'AUTEUR', class: 'form-control', }
+        }) }}
         {{ form_row(bookForm.description, {
             attr: { placeholder: 'DESCRIPTION', class:'form-control'}
-        }) }}
-        {{ form_row(bookForm.content, {
-            attr: { placeholder: 'CONTENU', class:'form-control'}
         }) }}
         {{ form_row(bookForm.url, {
             attr: { placeholder: 'LIEN DU FLYER', class:'form-control'}

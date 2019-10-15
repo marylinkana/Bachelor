@@ -2,31 +2,31 @@
 
 namespace App\Repository;
 
-use App\Entity\Categories;
+use App\Entity\categories;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Categories|null find($id, $lockMode = null, $lockVersion = null)
- * @method Categories|null findOneBy(array $criteria, array $orderBy = null)
- * @method Categories[]    findAll()
- * @method Categories[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method categories|null find($id, $lockMode = null, $lockVersion = null)
+ * @method categories|null findOneBy(array $criteria, array $orderBy = null)
+ * @method categories[]    findAll()
+ * @method categories[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CategoriesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Categories::class);
+        parent::__construct($registry, categories::class);
     }
 
     // /**
-    //  * @return Categories[] Returns an array of Categories objects
+    //  * @return categories[] Returns an array of categories objects
     //  */
 
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.category = :val')
+            ->andWhere('c.categories = :val')
             ->setParameter('val', $value)
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
@@ -35,11 +35,20 @@ class CategoriesRepository extends ServiceEntityRepository
         ;
     }
 
-
-    public function findOneBySomeField($value): ?Categories
+    public function findOneByIdJoinedToBooks($book)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.category = :val')
+            ->innerJoin('c.books', 'cb')
+            ->andWhere('cb.id = :id')
+            ->setParameter('id', $book)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findOneBySomeField($value): ?categories
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.categories = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

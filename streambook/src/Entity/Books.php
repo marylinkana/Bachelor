@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,22 +31,28 @@ class Books
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $content;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $autor;
+    private $author;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="idBook", orphanRemoval=true)
+     */
+    private $pages;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Categories", inversedBy="books")
      */
     private $category;
+
+    public function __construct()
+    {
+        $this->pages = new ArrayCollection();
+        $this->category = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,17 +83,6 @@ class Books
         return $this;
     }
 
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): self
-    {
-        $this->content = $content;
-
-        return $this;
-    }
 
     public function getUrl(): ?string
     {
@@ -99,26 +96,72 @@ class Books
         return $this;
     }
 
-    public function getAutor(): ?string
+
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPages(): Collection
     {
-        return $this->autor;
+        return $this->pages;
     }
 
-    public function setAutor(string $autor): self
+    public function addPage(Page $page): self
     {
-        $this->autor = $autor;
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->setIdBook($this);
+        }
 
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->contains($page)) {
+            $this->pages->removeElement($page);
+            // set the owning side to null (unless already changed)
+            if ($page->getIdBook() === $this) {
+                $page->setIdBook(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Categories[]
+     */
+    public function getCategory(): Collection
     {
         return $this->category;
     }
 
-    public function setCategory(string $category): self
+    public function addCategory(categories $category): self
     {
-        $this->category = $category;
+        if (!$this->category->contains($category)) {
+            $this->category[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(categories $category): self
+    {
+        if ($this->category->contains($category)) {
+            $this->category->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(string $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

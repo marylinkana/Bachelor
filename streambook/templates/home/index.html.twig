@@ -74,34 +74,36 @@
                         {% if user is defined %}
                         <h1 class="" style="text-align: center">Notre sélection pour vous</h1>
                         {% else %}
-                            <h1 class="h3 mb-0 text-gray-800"><a href="{{ path('app_login') }}">Connectez</a> vous pour voir votre sélection personnalisée</h1>
+                            <h1 class="h3 mb-0 text-gray-800"><a href="{{ path('app_login') }}"><i class="fa fa-sign-in fa-sm text-blue-50"> </i> Connectez</a> vous pour voir votre sélection personnalisée</h1>
+                            <a href="{{ path('app_register') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa fa-registered fa-sm text-white-50"></i> je crée mon compte</a>
                         {% endif %}
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa fa-sign-in fa-sm text-white-50"></i> Generate Report</a>
                     </div>
                     <!-- Content Row -->
                     <div class="row">
-                        {% for book in books %}
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-lg-3 col-md-6 col-sm-12" style="margin-top: 20px">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <a href="readBook/{{book.id}}"><img style="width: 250px; height: 340px" src="{{ book.url }}" alt=""></a>
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <h6>{{ book.title }}</h6>
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <a href="readBook/{{book.id}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa fa-sign-in"></i> Lire </a>
+                        {% if books is defined %}
+                            {% for book in books %}
+                                <!-- Earnings (Monthly) Card Example -->
+                                <div class="col-lg-3 col-md-6 col-sm-12" style="margin-top: 20px">
+                                <div class="card border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <a href="{{ path('app_readBook', {'id':book.id}) }}"><img style="width: 250px; height: 340px" src="{{ book.url }}" alt=""></a>
+                                                </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <h6>{{ book.title }}</h6>
+                                                </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    <a href="{{ path('app_readBook', {'id':book.id}) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa fa-sign-in"></i> Lire </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        {% endfor %}
+                            {% endfor %}
+                        {% endif %}
 
                     </div>
                     <!-- Content Row -->
