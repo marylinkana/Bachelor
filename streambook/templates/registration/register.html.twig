@@ -6,6 +6,9 @@
     <h1>Register</h1>
 
     {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.name, {
+            attr: { placeholder: 'Nom', class: 'form-control' }
+        }) }}
         {{ form_row(registrationForm.email, {
             attr: { placeholder: 'Email', class: 'form-control' }
         }) }}

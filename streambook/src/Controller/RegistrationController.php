@@ -32,6 +32,9 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // init level at zero
+            $user->setLevel(0);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -50,4 +53,5 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
 }

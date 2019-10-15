@@ -6,8 +6,6 @@ use App\Entity\Books;
 use App\Entity\Categories;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class HomeController extends AbstractController
 {
@@ -23,19 +21,17 @@ class HomeController extends AbstractController
         }
         else{
             $user = $this->getUser();
-            $user_email = $this->getUser()->getEmail();
-            $user_id = $this->getUser()->getId();
+
             $books = $this->getDoctrine()
                 ->getRepository(Books::class)
                 ->findAll();
+
             $categories = $this->getDoctrine()
                 ->getRepository(Categories::class)
                 ->findAll();
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
                 'user' => $user,
-                'user_email' => $user_email,
-                'user_id' => $user_id,
                 'books' => $books,
                 'categories' => $categories,
             ]);
@@ -43,7 +39,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/{cat}", name="app_home/{cat}")
+     * @Route("/category/{cat}", name="app_category")
      */
     public function category($cat)
     {
@@ -54,19 +50,17 @@ class HomeController extends AbstractController
         }
         else{
             $user = $this->getUser();
-            $user_email = $this->getUser()->getEmail();
-            $user_id = $this->getUser()->getId();
+
             $books = $this->getDoctrine()
                 ->getRepository(Books::class)
-                ->findByExampleField($cat);
+                ->findByIdJoinedToCategory($cat);
+
             $categories = $this->getDoctrine()
                 ->getRepository(Categories::class)
                 ->findAll();
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
                 'user' => $user,
-                'user_email' => $user_email,
-                'user_id' => $user_id,
                 'books' => $books,
                 'categories' => $categories,
             ]);
@@ -74,7 +68,35 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/readBook/{id}", name="app_readBook/{id}")
+     * @Route("/search", name="app_search")
+     */
+    public function search()
+    {
+        if (!isset($_POST['search']) && !empty($_POST['searchValue'])) {
+            echo 'bonjour';
+            return $this->render('home/index.html.twig', [
+                'controller_name' => 'HomeController',
+            ]);
+        }
+        $user = $this->getUser();
+
+        $books = $this->getDoctrine()
+            ->getRepository(Books::class)
+            ->findLikeExampleField($_POST['searchValue']);
+
+        $categories = $this->getDoctrine()
+            ->getRepository(Categories::class)
+            ->findAll();
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'HomeController',
+            'user' => $user,
+            'books' => $books,
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
+     * @Route("/readBook/{id}", name="app_readBook")
      */
     public function readBook($id)
     {
@@ -85,11 +107,13 @@ class HomeController extends AbstractController
         }
         else{
             $user = $this->getUser();
-            $user_email = $this->getUser()->getEmail();
-            $user_id = $this->getUser()->getId();
+
             $books = $product = $this->getDoctrine()
                 ->getRepository(Books::class)
                 ->find($id);
+            $categories = $this->getDoctrine()
+                ->getRepository(Categories::class)
+                ->findAll();
             if (!empty($books)) {
                 $title = $books->getTitle();
                 $description = $books->getDescription();
@@ -103,8 +127,7 @@ class HomeController extends AbstractController
             return $this->render('home/readBook.html.twig', [
                 'controller_name' => 'HomeController',
                 'user' => $user,
-                'user_email' => $user_email,
-                'user_id' => $user_id,
+                'categories' => $categories,
                 'books' => $books,
                 'bookTitle' => $title,
                 'bookDescription' => $description,

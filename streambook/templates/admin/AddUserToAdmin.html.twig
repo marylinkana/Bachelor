@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Gestion admin</h1>
+
+    <form action="{{ path('app_newUserToAdmin') }}" method="post">
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Sélectionner un utilisateur</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="id">
+                {% if allUsers is defined %}
+                    {% for oneUser in allUsers %}
+                        <option  name="id" value="{{ oneUser.id }}"> nom : {{ oneUser.name }},
+                                                                     Email : {{ oneUser.email }},
+                                                                     {% if oneUser.level == 1 %}
+                                                                         Admin
+                                                                     {% endif %}
+                        </option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+        <input class="btn btn-success" type="submit" class="btn btn-success" name="submit_add_admin" value="ajouter">
+        <input class="btn btn-danger" type="submit" class="btn btn-danger" name="submit_delete_admin" value="retirer">
+    </form>
+
+{% endblock %}
