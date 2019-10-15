@@ -34,15 +34,16 @@
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">{{ bookTitle }}</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">{{ book.title }}</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                             <div class="dropdown-header">Changer de page</div>
-                                            <a class="dropdown-item" href="#">Page 1</a>
-                                            <a class="dropdown-item" href="#">Page 2</a>
+                                            {% for page in pages %}
+                                                <a class="dropdown-item" href="#">{{ loop.index }}</a>
+                                            {% endfor %}
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">Les oeuvres du même auteur</a>
                                         </div>
@@ -50,7 +51,10 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <p>{{ bookContent }}</p>
+                                    {% for page in pages %}
+                                        <h4>{{ page.title }}</h4>
+                                        <p>{{ page.content }}</p>
+                                    {% endfor %}
                                 </div>
                                 <div class="card-body">
                                     <p></p>
@@ -79,7 +83,7 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <p>{{ bookDescription }}</p>
+                                    <p>{{ book.description }}</p>
                                     <div class="mt-4 text-center small">
                                     <span class="mr-2">
                                       <i class="fa fa-circle text-success"></i> page 1

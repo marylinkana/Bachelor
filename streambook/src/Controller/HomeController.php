@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Books;
 use App\Entity\Categories;
+use App\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -108,18 +109,19 @@ class HomeController extends AbstractController
         else{
             $user = $this->getUser();
 
-            $books = $product = $this->getDoctrine()
+            $book = $product = $this->getDoctrine()
                 ->getRepository(Books::class)
-                ->find($id);
+                ->findOneByIdField($id);
+
+            $pages = $this->getDoctrine()
+                ->getRepository(Page::class)
+                ->findByExampleField($id);
+
             $categories = $this->getDoctrine()
                 ->getRepository(Categories::class)
                 ->findAll();
-            if (!empty($books)) {
-                $title = $books->getTitle();
-                $description = $books->getDescription();
-                $content = $books->getContent();
-                $url = $books->getUrl();
-            }else{
+            if (empty($book)) {
+
                 throw $this->createNotFoundException(
                     'No product found for id '.$id
                 );
@@ -128,11 +130,8 @@ class HomeController extends AbstractController
                 'controller_name' => 'HomeController',
                 'user' => $user,
                 'categories' => $categories,
-                'books' => $books,
-                'bookTitle' => $title,
-                'bookDescription' => $description,
-                'bookContent' => $content,
-                'bookUrl' => $url,
+                'book' => $book,
+                'pages' => $pages
             ]);
         }
     }
