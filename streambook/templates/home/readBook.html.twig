@@ -36,13 +36,13 @@
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">{{ book.title }}</h6>
                                     <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        <a class="dropdown-toggle" href="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Liste des pages <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                             <div class="dropdown-header">Changer de page</div>
                                             {% for page in pages %}
-                                                <a class="dropdown-item" href="#">page : {{ loop.index }}</a>
+                                                <a class="dropdown-item" href="javascript:AfficherMasquer({{ loop.index }})">page : {{ loop.index }}</a>
                                             {% endfor %}
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">Les oeuvres du même auteur</a>
@@ -52,14 +52,44 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     {% for page in pages %}
-                                        <h6>Page : {{ loop.index }}</h6>
-                                        <h4>{{ page.title }}</h4>
-                                        {{ page.content | raw }}
-                                        <div style="margin-top: 50px"></div>
+                                        {% if loop.index == 1 %}
+                                            <div id="{{ loop.index }}" style="display: block">
+                                        {% else %}
+                                            <div id="{{ loop.index }}" style="display: none">
+                                        {% endif %}
+                                                <h6>Page : {{ loop.index }}</h6>
+                                                <h4>{{ page.title }}</h4>
+                                                {{ page.content | raw }}
+                                                <div class="mt-4 text-center small">
+                                                    <a href="javascript:TerminerCettePage({{ loop.index }})">
+                                                        <button class="btn btn-success" >
+                                                          J'ai terminé je passe à la page {{ loop.index + 1 }} <i class="fa fa-sign-in text-white"></i>
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
                                     {% endfor %}
+                                                <script>
+                                        function AfficherMasquer($id) {
+                                            {% for page in pages %}
+                                                divInfo = document.getElementById({{ loop.index }});
+                                                divInfo.style.display = 'none';
+                                            {% endfor %}
+                                            divInfo = document.getElementById($id);
+                                            divInfo.style.display = 'block';
+                                        }
+                                        function TerminerCettePage($id) {
+                                            {% for page in pages %}
+                                            divInfo = document.getElementById({{ loop.index }});
+                                            divInfo.style.display = 'none';
+                                            {% endfor %}
+                                            divInfo = document.getElementById($id + 1);
+                                            divInfo.style.display = 'block';
+                                        }
+                                    </script>
                                 </div>
                                 <div class="card-body">
-                                    <p></p>
+                                    <p>Copyright ©</p>
                                 </div>
                             </div>
                         </div>
@@ -86,17 +116,6 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <p>{{ book.description }}</p>
-                                    <div class="mt-4 text-center small">
-                                    <span class="mr-2">
-                                      <i class="fa fa-circle text-success"></i> page 1
-                                    </span>
-                                                        <span class="mr-2">
-                                      <i class="fa fa-circle text-primary"></i> page 2
-                                    </span>
-                                                        <span class="mr-2">
-                                      <i class="fa fa-circle text-secondary"></i> Page 3
-                                    </span>
-                                    </div>
                                 </div>
 
                             </div>
