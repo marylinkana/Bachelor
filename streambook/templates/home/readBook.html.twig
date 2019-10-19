@@ -26,9 +26,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <div class="row">
-
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
@@ -37,7 +35,7 @@
                                     <h6 class="m-0 font-weight-bold text-primary">{{ book.title }}</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Liste des pages <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                            Liste des pages
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                             <div class="dropdown-header">Changer de page</div>
@@ -69,24 +67,6 @@
                                                 </div>
                                             </div>
                                     {% endfor %}
-                                                <script>
-                                        function AfficherMasquer($id) {
-                                            {% for page in pages %}
-                                                divInfo = document.getElementById({{ loop.index }});
-                                                divInfo.style.display = 'none';
-                                            {% endfor %}
-                                            divInfo = document.getElementById($id);
-                                            divInfo.style.display = 'block';
-                                        }
-                                        function TerminerCettePage($id) {
-                                            {% for page in pages %}
-                                            divInfo = document.getElementById({{ loop.index }});
-                                            divInfo.style.display = 'none';
-                                            {% endfor %}
-                                            divInfo = document.getElementById($id + 1);
-                                            divInfo.style.display = 'block';
-                                        }
-                                    </script>
                                 </div>
                                 <div class="card-body">
                                     <p>Copyright ©</p>
@@ -117,20 +97,84 @@
                                 <div class="card-body">
                                     <p>{{ book.description }}</p>
                                 </div>
-
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Flyer</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Changer de page</div>
+                                            <a class="dropdown-item" href="#">Page 1</a>
+                                            <a class="dropdown-item" href="#">Page 2</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Les oeuvres du même auteur</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <img class="center-block" style="width: 80%; height: 90%;" src="{{ book.url }}" alt="">
+                                    </div>
+                                </div>
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Commentaires</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Changer de page</div>
+                                            <a class="dropdown-item" href="#">Page 1</a>
+                                            <a class="dropdown-item" href="#">Page 2</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Les oeuvres du même auteur</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                {% for comment in comments %}
+                                    <div class="card-body">
+                                        <div class="">
+                                           <p style="">{{ comment.user.name }}</p>
+                                           <p class="small-text" style="float: right; font-size: smaller">{{ comment.date|date("m/d/Y h:m:s") }}</p>
+                                        </div>
+                                        <div class="" style="margin-top: 20px">
+                                            <h6 style="">{{ comment.content|raw }}</h6>
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
-
+                        <form action="{{ path('app_readBook', {'id':book.id}) }}" method="post">
+                            <div class="form-group">
+                                <head>
+                                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+                                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+                                </head>
+                                <textarea name="content" id="summernote"></textarea>
+                                <input type="hidden" value="{{ book.id }}" name="bookId" id="bookid">
+                                <script>
+                                    $('#summernote').summernote({
+                                        placeholder: 'Laisser un commentaire...',
+                                        tabsize: 2,
+                                        height: 200,
+                                    });
+                                </script>
+                            </div>
+                            <input class="btn btn-success" type="submit" class="btn btn-success" name="submit_comment" value="envoyer">
+                        </form>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
-
         </div>
         <!-- End of Content Wrapper -->
-
     </div>
     <!-- End of Page Wrapper -->
 

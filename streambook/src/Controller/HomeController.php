@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Books;
 use App\Entity\Categories;
+use App\Entity\Comments;
 use App\Entity\Page;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +16,7 @@ class HomeController extends AbstractController
      */
     public function index()
     {
+
         if (is_null($this->getUser())) {
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
@@ -101,6 +103,22 @@ class HomeController extends AbstractController
      */
     public function readBook($id)
     {
+        if(isset($_POST['submit_comment'])){
+            $user = $this->getUser();
+            $book = $this->getDoctrine()
+                ->getRepository(Books::class)
+                ->find($_POST['bookId']);
+            $date = new \DateTime('now');
+            $comment = new Comments();
+            $comment->setContent($_POST['content']);
+            $comment->setdate($date);
+            $comment->setUser($user);
+            $comment->setBooks($book);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
         if (is_null($this->getUser())) {
             return $this->render('home/readBook.html.twig', [
                 'controller_name' => 'HomeController',
@@ -120,6 +138,10 @@ class HomeController extends AbstractController
             $categories = $this->getDoctrine()
                 ->getRepository(Categories::class)
                 ->findAll();
+
+            $comments = $this->getDoctrine()
+                ->getRepository(Comments::class)
+                ->findAll();
             if (empty($book)) {
 
                 throw $this->createNotFoundException(
@@ -131,7 +153,8 @@ class HomeController extends AbstractController
                 'user' => $user,
                 'categories' => $categories,
                 'book' => $book,
-                'pages' => $pages
+                'pages' => $pages,
+                'comments' => $comments
             ]);
         }
     }

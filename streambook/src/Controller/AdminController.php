@@ -10,7 +10,7 @@ use App\Form\AddBookToCategoryFormType;
 use App\Form\AddUserToAdminFormType;
 use App\Form\CreateBookFormType;
 use App\Form\CreateCategoryFormType;
-use App\Form\CreatePageForBookFormTypePhpType;
+use App\Form\CreatePageForBookFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -257,7 +257,7 @@ class AdminController extends AbstractController
     public function newPageForBook(Request $request): Response
     {
         $page = new Page();
-        $form = $this->createForm(CreatePageForBookFormTypePhpType::class, $page);
+        $form = $this->createForm(CreatePageForBookFormType::class, $page);
         $form->handleRequest($request);
 
         $allBooks = $this->getDoctrine()

@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreatePageForBookFormTypePhpType extends AbstractType
+class CreatePageForBookFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
