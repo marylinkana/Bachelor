@@ -135,15 +135,17 @@
                                 </div>
                                 <!-- Card Body -->
                                 {% for comment in comments %}
-                                    <div class="card-body">
-                                        <div class="">
-                                           <p style="">{{ comment.user.name }}</p>
-                                           <p class="small-text" style="float: right; font-size: smaller">{{ comment.date|date("m/d/Y h:m:s") }}</p>
+                                    {% if comment.books.id == book.id %}
+                                        <div class="card-body">
+                                            <div class="">
+                                                <p style="">{{ comment.user.name }}</p>
+                                                <p class="small-text" style="float: right; font-size: smaller">{{ comment.date|date("m/d/Y h:m:s") }}</p>
+                                            </div>
+                                            <div class="" style="margin-top: 20px">
+                                                <h6 style="">{{ comment.content|raw }}</h6>
+                                            </div>
                                         </div>
-                                        <div class="" style="margin-top: 20px">
-                                            <h6 style="">{{ comment.content|raw }}</h6>
-                                        </div>
-                                    </div>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
