@@ -123,6 +123,19 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    <!--div class="container">
+        <h1>AFSY - WebSockets and Symfony</h1>
+        <div id="ws-content-receiver">
+            Connecting...
+        </div>
+    </div>
+    <script type="text/javascript">
+        {% if ws_url is defined %}
+        var wsUrl = '{{ ws_url }}';
+        {% endif %}
+    </script>
+    <script-- type="text/javascript" src="{{ asset('app/js/sf-websocket.js') }}"></script-->
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -139,9 +152,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
-
-
 
     </body>
 {% endblock %}

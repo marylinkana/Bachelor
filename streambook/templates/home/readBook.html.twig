@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <style>
+    <style xmlns="http://www.w3.org/1999/html">
         .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
@@ -58,18 +58,21 @@
                                                 <h6>Page : {{ loop.index }}</h6>
                                                 <h4>{{ page.title }}</h4>
                                                 {{ page.content | raw }}
-                                                <div class="mt-4 text-center small">
-                                                    <a href="javascript:TerminerCettePage({{ loop.index }})">
-                                                        <button class="btn btn-success" >
-                                                          J'ai terminé je passe à la page {{ loop.index + 1 }} <i class="fa fa-sign-in text-white"></i>
-                                                        </button>
-                                                    </a>
+                                                <div class="card-body">
+                                                    <p>Copyright ©</p>
                                                 </div>
+                                                <div class="mt-4 text-center small">
+                                                    <form action="{{ path('app_readBook', {'id':book.id}) }}" method="post">
+                                                        <div class="form-group">
+                                                            <input type="hidden" name="userRead" value="{{ user.id }}">
+                                                            <input type="hidden" name="pageRead" value="{{ page.id }}">
+                                                        </div>
+                                                        <input class="btn btn-success" type="submit" class="btn btn-success" name="read" value="J'ai terminé">
+                                                    </form>
+                                                </div>
+                                                <a class="btn btn-success" href="javascript:TerminerCettePage({{ loop.index }})">je passe à la page {{ loop.index + 1 }} <i class="fa fa-sign-in"></i></a>
                                             </div>
                                     {% endfor %}
-                                </div>
-                                <div class="card-body">
-                                    <p>Copyright ©</p>
                                 </div>
                             </div>
                         </div>

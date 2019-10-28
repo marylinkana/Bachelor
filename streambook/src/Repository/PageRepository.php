@@ -36,7 +36,7 @@ class PageRepository extends ServiceEntityRepository
         ;
     }
 
-    /*
+
     public function findOneBySomeField($value): ?Page
     {
         return $this->createQueryBuilder('p')
@@ -46,5 +46,5 @@ class PageRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+
 }

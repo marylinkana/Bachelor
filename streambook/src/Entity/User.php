@@ -52,9 +52,15 @@ class User implements UserInterface
      */
     private $Comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Page", mappedBy="user")
+     */
+    private $pages;
+
     public function __construct()
     {
         $this->Comments = new ArrayCollection();
+        $this->pages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,6 +192,34 @@ class User implements UserInterface
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->contains($page)) {
+            $this->pages->removeElement($page);
+            $page->removeUser($this);
         }
 
         return $this;

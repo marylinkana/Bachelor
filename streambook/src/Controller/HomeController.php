@@ -6,6 +6,7 @@ use App\Entity\Books;
 use App\Entity\Categories;
 use App\Entity\Comments;
 use App\Entity\Page;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -37,6 +38,8 @@ class HomeController extends AbstractController
                 'user' => $user,
                 'books' => $books,
                 'categories' => $categories,
+                'ws_url' => 'localhost:8080',
+
             ]);
         }
     }
@@ -99,12 +102,29 @@ class HomeController extends AbstractController
     }
 
     /**
+     * @Route("/read", name="app_read")
+     */
+    public function read($pageRead){
+        $user = $this->getUser();
+        $page = $this->getDoctrine()
+            ->getRepository(Page::class)
+            ->find($pageRead);
+        $page->addUser($user);
+        $user->addPage($page);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($page);
+        $entityManager->persist($user);
+        $entityManager->flush();
+    }
+
+    /**
      * @Route("/readBook/{id}", name="app_readBook")
      */
     public function readBook($id)
     {
+        $user = $this->getUser();
         if(isset($_POST['submit_comment'])){
-            $user = $this->getUser();
+
             $book = $this->getDoctrine()
                 ->getRepository(Books::class)
                 ->find($_POST['bookId']);
@@ -125,8 +145,6 @@ class HomeController extends AbstractController
             ]);
         }
         else{
-            $user = $this->getUser();
-
             $book = $product = $this->getDoctrine()
                 ->getRepository(Books::class)
                 ->findOneByIdField($id);
@@ -142,10 +160,22 @@ class HomeController extends AbstractController
             $comments = $this->getDoctrine()
                 ->getRepository(Comments::class)
                 ->findAll();
+            if (isset($_POST['read'])){
+                $user = $this->getUser();
+                $page = $this->getDoctrine()
+                    ->getRepository(Page::class)
+                    ->find($_POST['pageRead']);
+                $page->addUser($user);
+                $user->addPage($page);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($page);
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
             if (empty($book)) {
 
                 throw $this->createNotFoundException(
-                    'No product found for id '.$id
+                    'No book found for id '.$id
                 );
             }
             return $this->render('home/readBook.html.twig', [
@@ -154,8 +184,9 @@ class HomeController extends AbstractController
                 'categories' => $categories,
                 'book' => $book,
                 'pages' => $pages,
-                'comments' => $comments
+                'comments' => $comments,
             ]);
         }
+
     }
 }
