@@ -270,6 +270,7 @@ class AdminController extends AbstractController
 
         $thisUser = $this->getUser();
 
+
         if (isset($_POST['submit_add_page_for_book'])) {
             $book= $this->getDoctrine()
                 ->getRepository(Books::class)

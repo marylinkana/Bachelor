@@ -96,6 +96,16 @@
             divInfo = document.getElementById($id);
             divInfo.style.display = 'block';
         }
+        function TerminerCettePage($id) {
+            {% if pages is defined %}
+                {% for page in pages %}
+                divInfo = document.getElementById({{ loop.index }});
+                divInfo.style.display = 'none';
+                {% endfor %}
+            {% endif %}
+            divInfo = document.getElementById($id + 1);
+            divInfo.style.display = 'block';
+        }
     </script>
     {% block javascripts %}{% endblock %}
     </body>
