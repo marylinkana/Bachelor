@@ -55,6 +55,11 @@
                                         {% else %}
                                             <div id="{{ loop.index }}" style="display: none">
                                         {% endif %}
+                                                {% for pageUser in page.user %}
+                                                    {% if pageUser.id == user.id%}
+                                                        <h2 style="float: right"> ✅</h2>
+                                                    {% endif %}
+                                                {% endfor %}
                                                 <h6>Page : {{ loop.index }}</h6>
                                                 <h4>{{ page.title }}</h4>
                                                 {{ page.content | raw }}

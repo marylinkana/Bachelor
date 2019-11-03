@@ -127,7 +127,7 @@
                                                             </div>
                                                             <div class="card-body">
                                                                 {% for myReadBook in myReadBooks %}
-                                                                    <h4 class="small font-weight-bold">{{ myReadBook.title }} <a href="{{ path('app_readBook', {'id':myReadBook.id}) }}"><i class="fa fa-sign-in"></i></a> <span class="float-right">{{ readPercents[myReadBook.id] }} %</span></h4>
+                                                                    <h4 class="small font-weight-bold">{{ myReadBook.title }} <a href="{{ path('app_readBook', {'id':myReadBook.id}) }}"><i class="fa fa-sign-in"></i></a> <span class="float-right">{{ readPercents[myReadBook.id] |round(0, 'floor')}} %</span></h4>
                                                                     <div class="progress mb-4">
                                                                             <div class="progress-bar" role="progressbar" style="width: {{ readPercents[myReadBook.id] }}%" aria-valuenow="{{ readPercents[myReadBook.id] }}" aria-valuemin="0" aria-valuemax="100"></div>
                                                                     </div>
