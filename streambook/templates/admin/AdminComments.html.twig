@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Gestion des commentaires</h1>
+
+    <form action="{{ path('app_adminComment') }}" method="post">
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Sélectionner un commentaire à supprimer</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="id">
+                {% if comments is defined %}
+                    {% for comment in comments %}
+                        <option  name="id" value="{{ comment.id }}"> User : {{ comment.user.name }},
+                                                                     Livre : {{ comment.books.title }},
+                                                                     contenue : {{ comment.content | raw }},
+                                                                     date : {{ comment.date | date("d/m/Y h:m:s")}},
+
+                        </option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+        <input class="btn btn-danger" type="submit" class="btn btn-danger" name="submit_delete" value="Delete">
+    </form>
+
+{% endblock %}

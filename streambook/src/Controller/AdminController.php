@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Books;
 use App\Entity\Categories;
+use App\Entity\Comments;
 use App\Entity\Page;
 use App\Entity\User;
 use App\Form\AddBookToCategoryFormType;
@@ -308,6 +309,49 @@ class AdminController extends AbstractController
             'allBooks' => $allBooks,
             'user' => $thisUser,
             'allCategories' => $allCategories,
+        ]);
+    }
+
+    /**
+     * @Route("/adminComment", name="app_adminComment")
+     */
+    public function adminComment(Request $request): Response
+    {
+        $user = new User();
+        $form = $this->createForm(AddUserToAdminFormType::class, $user);
+        $form->handleRequest($request);
+
+        $allUsers = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+
+        $categories = $this->getDoctrine()
+            ->getRepository(Categories::class)
+            ->findAll();
+
+        $comments = $this->getDoctrine()
+            ->getRepository(Comments::class)
+            ->findAll();
+
+        $thisUser = $this->getUser();
+
+        if (isset($_POST['submit_delete'])) {
+            $comment= $this->getDoctrine()
+                ->getRepository(Comments::class)
+                ->find($_POST['id']);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+
+        }
+
+        return $this->render('admin/AdminComments.html.twig', [
+            'adminForm' => $form->createView(),
+            'allUsers' => $allUsers,
+            'user' => $thisUser,
+            'categories' => $categories,
+            'comments' => $comments
         ]);
     }
 
