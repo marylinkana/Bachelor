@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <h1>Gestion admin</h1>
+    <h1>Gestion Utilisateur</h1>
 
     <form action="{{ path('app_newUserToAdmin') }}" method="post">
         <div class="form-group">
@@ -16,13 +16,18 @@
                                                                      {% if oneUser.level == 1 %}
                                                                          Admin
                                                                      {% endif %}
+                                                                     {% if oneUser.level == -1 %}
+                                                                         Banni
+                                                                     {% endif %}
                         </option>
                     {% endfor %}
                 {% endif %}
             </select>
         </div>
-        <input class="btn btn-success" type="submit" class="btn btn-success" name="submit_add_admin" value="ajouter">
-        <input class="btn btn-danger" type="submit" class="btn btn-danger" name="submit_delete_admin" value="retirer">
+        <input class="btn btn-secondary" type="submit" class="btn btn-success" name="submit_add_admin" value="Be Admin">
+        <input class="btn btn-info" type="submit" class="btn btn-danger" name="submit_delete_admin" value="Be User">
+        <input class="btn btn-warning" type="submit" class="btn btn-danger" name="submit_ban" value="Bannir">
+        <input class="btn btn-danger" type="submit" class="btn btn-danger" name="submit_delete" value="Delete">
     </form>
 
 {% endblock %}

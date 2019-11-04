@@ -40,7 +40,7 @@
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                                             <div class="dropdown-header">Changer de page</div>
                                             {% for page in pages %}
-                                                <a class="dropdown-item" href="javascript:AfficherMasquer({{ loop.index }})">page : {{ loop.index }}</a>
+                                                <a class="dropdown-item" href="javascript:ViewPage({{ loop.index }})">page : {{ loop.index }}</a>
                                             {% endfor %}
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">Les oeuvres du même auteur</a>
@@ -75,7 +75,7 @@
                                                         <input class="btn btn-success" type="submit" class="btn btn-success" name="read" value="J'ai terminé">
                                                     </form>
                                                 </div>
-                                                <a class="btn btn-success" href="javascript:TerminerCettePage({{ loop.index }})">je passe à la page {{ loop.index + 1 }} <i class="fa fa-sign-in"></i></a>
+                                                <a class="btn btn-success" href="javascript:NextPage({{ loop.index }})">je passe à la page {{ loop.index + 1 }} <i class="fa fa-sign-in"></i></a>
                                             </div>
                                     {% endfor %}
                                 </div>
@@ -141,20 +141,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Card Body -->
-                                {% for comment in comments %}
-                                    {% if comment.books.id == book.id %}
-                                        <div class="card-body">
-                                            <div class="">
-                                                <p style="">{{ comment.user.name }}</p>
-                                                <p class="small-text" style="float: right; font-size: smaller">{{ comment.date|date("m/d/Y h:m:s") }}</p>
+                                {% if user.level is defined and user.level != -1 %}
+                                    <!-- Card Body -->
+                                    {% for comment in comments %}
+                                        {% if comment.books.id == book.id %}
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <p style="">{{ comment.user.name }}</p>
+                                                    <p class="small-text" style="float: right; font-size: smaller">{{ comment.date|date("m/d/Y h:m:s") }}</p>
+                                                </div>
+                                                <div class="" style="margin-top: 20px">
+                                                    <h6 style="">{{ comment.content|raw }}</h6>
+                                                </div>
                                             </div>
-                                            <div class="" style="margin-top: 20px">
-                                                <h6 style="">{{ comment.content|raw }}</h6>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="alert alert-danger" role="alert">
+                                        Désolé vous avez été <a href="#" class="alert-link">Banni</a>. Vous serez réintégré dans 28 jour!.
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

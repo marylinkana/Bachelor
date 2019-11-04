@@ -157,19 +157,37 @@ class AdminController extends AbstractController
             $entityManager->flush();
 
         }
+
         if (isset($_POST['submit_delete_admin'])) {
             $user= $this->getDoctrine()
                 ->getRepository(User::class)
                 ->find($_POST['id']);
 
-            // stay whit same last name
-            $user->setName($user->getName());
-            // stay whit same last email
-            $user->setEmail($user->getEmail());
-            // stay whit same last password
-            $user->setPassword($user->getPassword());
-            // Update level
             $user->setLevel(0);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+        }
+
+        if (isset($_POST['submit_delete'])) {
+            $user= $this->getDoctrine()
+                ->getRepository(User::class)
+                ->find($_POST['id']);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($user);
+            $entityManager->flush();
+
+        }
+
+        if (isset($_POST['submit_ban'])) {
+            $user= $this->getDoctrine()
+                ->getRepository(User::class)
+                ->find($_POST['id']);
+
+            $user->setLevel(-1);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

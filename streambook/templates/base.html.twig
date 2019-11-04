@@ -10,6 +10,7 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+
     <nav class=" navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand text-success" href="{{ path('app_home') }}">STREAMBOOK</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +87,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 
     <script>
-        function AfficherMasquer($id) {
+        function ViewPage($id) {
             {% if pages is defined %}
                 {% for page in pages %}
                 divInfo = document.getElementById({{ loop.index }});
@@ -96,7 +97,7 @@
             divInfo = document.getElementById($id);
             divInfo.style.display = 'block';
         }
-        function TerminerCettePage($id) {
+        function NextPage($id) {
             {% if pages is defined %}
                 {% for page in pages %}
                 divInfo = document.getElementById({{ loop.index }});
