@@ -4,13 +4,15 @@ namespace App\Controller;
 use App\Entity\Categories;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/user", name="app_user")
      */
-    public function index()
+    public function index(UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = $this->getUser();
 
@@ -19,6 +21,30 @@ class UserController extends AbstractController
             ->findAll();
 
         $myReadPages = $user->getPages();
+
+        if(isset($_POST['changeName'])){
+            $user->setName($_POST['userName']);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+        if(isset($_POST['changeEmail'])){
+            $user->setEmail($_POST['userEmail']);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+        if(isset($_POST['changePassword'])){
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $_POST['userPassword']
+                )
+            );
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
 
         foreach ($myReadPages as $k => $myReadPage){
             $myReadBooks[$myReadPage->getId()] = $myReadPage->getIdBook();
